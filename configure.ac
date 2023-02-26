@@ -1051,6 +1051,7 @@ dnl #
 dnl #  Check for libkqueue (or system kqueue present on OSX and the BSDs)
 dnl #
 FR_SMART_CHECK_LIB(kqueue, kqueue)
+AC_MSG_NOTICE([[kqueue is present header set x$ac_cv_func_kqueue]])
 
 dnl extra argument: --with-pcap-include-dir=DIR
 pcap_include_dir=
