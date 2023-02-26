@@ -7127,13 +7127,6 @@ if test "${with_pcap_lib_dir+set}" = set; then :
 fi
 
 
-ac_fn_c_check_func "$LINENO" "kqueue" "ac_cv_func_kqueue"
-if test "x$ac_cv_func_kqueue" = xyes; then :
-
-fi
-
-if test "x$ac_cv_func_kqueue" != "xyes"; then
-  smart_try_dir="$kqueue_lib_dir"
 
 
 sm_lib_safe=`echo "kqueue" | sed 'y%./+-%__p_%'`
@@ -7253,12 +7246,6 @@ if test "x$smart_lib" != "x"; then
   SMART_LIBS="$smart_ldflags $smart_lib $SMART_LIBS"
 fi
 
-  if test "x$ac_cv_lib_kqueue_kqueue" != "xyes"; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: kqueue library not found. Use --with-kqueue-lib-dir=<path>." >&5
-$as_echo "$as_me: WARNING: kqueue library not found. Use --with-kqueue-lib-dir=<path>." >&2;}
-    as_fn_error $? "FreeRADIUS requires libkqueue (or system kqueue).  Please read doc/developers/dependencies.adoc for further instructions." "$LINENO" 5
-  fi
-fi
 
 pcap_include_dir=
 
