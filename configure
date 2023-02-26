@@ -7127,6 +7127,139 @@ if test "${with_pcap_lib_dir+set}" = set; then :
 fi
 
 
+ac_fn_c_check_func "$LINENO" "kqueue" "ac_cv_func_kqueue"
+if test "x$ac_cv_func_kqueue" = xyes; then :
+
+fi
+
+if test "x$ac_cv_func_kqueue" != "xyes"; then
+  smart_try_dir="$kqueue_lib_dir"
+
+
+sm_lib_safe=`echo "kqueue" | sed 'y%./+-%__p_%'`
+sm_func_safe=`echo "kqueue" | sed 'y%./+-%__p_%'`
+
+old_LIBS="$LIBS"
+old_CPPFLAGS="$CPPFLAGS"
+smart_lib=
+smart_ldflags=
+smart_lib_dir=
+
+if test "x$smart_try_dir" != "x"; then
+  for try in $smart_try_dir; do
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for kqueue in -lkqueue in $try" >&5
+$as_echo_n "checking for kqueue in -lkqueue in $try... " >&6; }
+    LIBS="-lkqueue $old_LIBS"
+    CPPFLAGS="-L$try -Wl,-rpath,$try $old_CPPFLAGS"
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+extern char kqueue();
+int
+main ()
+{
+kqueue()
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+		 smart_lib="-lkqueue"
+		 smart_ldflags="-L$try -Wl,-rpath,$try"
+		 { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+		 break
+
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+  done
+  LIBS="$old_LIBS"
+  CPPFLAGS="$old_CPPFLAGS"
+fi
+
+if test "x$smart_lib" = "x"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for kqueue in -lkqueue" >&5
+$as_echo_n "checking for kqueue in -lkqueue... " >&6; }
+  LIBS="-lkqueue $old_LIBS"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+extern char kqueue();
+int
+main ()
+{
+kqueue()
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+	        smart_lib="-lkqueue"
+	        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+  LIBS="$old_LIBS"
+fi
+
+if test "x$smart_lib" = "x"; then
+  for try in /usr/local/lib /opt/lib; do
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for kqueue in -lkqueue in $try" >&5
+$as_echo_n "checking for kqueue in -lkqueue in $try... " >&6; }
+    LIBS="-lkqueue $old_LIBS"
+    CPPFLAGS="-L$try -Wl,-rpath,$try $old_CPPFLAGS"
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+extern char kqueue();
+int
+main ()
+{
+kqueue()
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+		  smart_lib="-lkqueue"
+		  smart_ldflags="-L$try -Wl,-rpath,$try"
+		  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+		  break
+
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+  done
+  LIBS="$old_LIBS"
+  CPPFLAGS="$old_CPPFLAGS"
+fi
+
+if test "x$smart_lib" != "x"; then
+  eval "ac_cv_lib_${sm_lib_safe}_${sm_func_safe}=yes"
+  LIBS="$smart_ldflags $smart_lib $old_LIBS"
+  SMART_LIBS="$smart_ldflags $smart_lib $SMART_LIBS"
+fi
+
+  if test "x$ac_cv_lib_kqueue_kqueue" != "xyes"; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: kqueue library not found. Use --with-kqueue-lib-dir=<path>." >&5
+$as_echo "$as_me: WARNING: kqueue library not found. Use --with-kqueue-lib-dir=<path>." >&2;}
+    as_fn_error $? "FreeRADIUS requires libkqueue (or system kqueue).  Please read doc/developers/dependencies.adoc for further instructions." "$LINENO" 5
+  fi
+fi
+
 pcap_include_dir=
 
 # Check whether --with-pcap-include-dir was given.

@@ -1047,6 +1047,19 @@ AC_ARG_WITH(pcap-lib-dir,
       ;;
   esac])
 
+dnl #
+dnl #  Check for libkqueue (or system kqueue present on OSX and the BSDs)
+dnl #
+AC_CHECK_FUNC([kqueue])
+if test "x$ac_cv_func_kqueue" != "xyes"; then
+  smart_try_dir="$kqueue_lib_dir"
+  FR_SMART_CHECK_LIB(kqueue, kqueue)
+  if test "x$ac_cv_lib_kqueue_kqueue" != "xyes"; then
+    AC_MSG_WARN([kqueue library not found. Use --with-kqueue-lib-dir=<path>.])
+    AC_MSG_ERROR([FreeRADIUS requires libkqueue (or system kqueue).  Please read doc/developers/dependencies.adoc for further instructions.])
+  fi
+fi
+
 dnl extra argument: --with-pcap-include-dir=DIR
 pcap_include_dir=
 AC_ARG_WITH(pcap-include-dir,
